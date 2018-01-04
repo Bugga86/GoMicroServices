@@ -30,8 +30,9 @@ func upload(wr http.ResponseWriter, rq *http.Request) {
 			return
 		}
 		defer file.Close()
-		fmt.Fprintf(wr, "%v", fileHdr)
-		f, err := os.OpenFile("./test/"+fileHdr.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+		//		fmt.Fprintf(wr, "%v", fileHdr)
+		fmt.Fprintf(wr, "%v", fileHdr.Filename+"has been uploaded")
+		f, err := os.OpenFile("./"+fileHdr.Filename, os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -40,6 +41,6 @@ func upload(wr http.ResponseWriter, rq *http.Request) {
 		io.Copy(f, file)
 	} else {
 
-		tpl.ExecuteTemplate(wr, "index.gohtml", "Hello")
+		tpl.ExecuteTemplate(wr, "index.gohtml", upload)
 	}
 }
