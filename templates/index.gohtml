@@ -2,18 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>INDEX</title>
+    <title>Image Upload</title>
 </head>
 <body>
 
-<h1>Sample HTML:</h1>
-{{range .}}
-<h2>{{.}}</h2>
-{{end}}
+<h1>ABC Insurance Company</h1>
 
-<form method="post" enctype="multipart/form-data">
-    <input type="file" name="nf">
-    <input type="submit">
+<form method="post" enctype="multipart/form-data" action="http://127.0.0.1/upload">
+    <input type="file" name="nf" />
+    <input type="submit" value="upload" />
 </form>
 
 </body>
