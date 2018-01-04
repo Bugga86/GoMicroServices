@@ -2,14 +2,23 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"io"
 	"net/http"
 	"os"
 )
 
+var tpl *template.Template
+
+func init() {
+	tpl = template.Must(template.ParseGlob("templates/*"))
+}
+
 func main() {
 	http.HandleFunc("/", upload)
-
+	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
+	http.Handle("/favicon.ico", http.NotFoundHandler())
+	http.ListenAndServe(":8080", nil)
 }
 func upload(wr http.ResponseWriter, rq *http.Request) {
 	fmt.Println(rq.Method)
@@ -29,5 +38,8 @@ func upload(wr http.ResponseWriter, rq *http.Request) {
 		}
 		defer f.Close()
 		io.Copy(f, file)
+	} else {
+
+		tpl.ExecuteTemplate(wr, "index.gohtml", "Hello")
 	}
 }
